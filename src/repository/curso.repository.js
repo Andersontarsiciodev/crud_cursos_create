@@ -1,4 +1,5 @@
-import db from "../config/database.js"
+
+import db from "../config/Database.js"
 
 db.run (`
     CREATE TABLE IF NOT EXISTS Curso(
@@ -11,9 +12,10 @@ db.run (`
     
 `)
 
-function creatCursorepositories (novoCurso){
+function creatcursoRepository (novocurso){
     return new Promise ((response, reject) => {
-        const {nome, area, nivel, modalidade} = novoCurso
+
+        const {nome, area, nivel, modalidade} = novocurso
 
         db.run (
             `INSERT INTOR Curso (nome, area, nivel, modalidade)
@@ -22,7 +24,22 @@ function creatCursorepositories (novoCurso){
                 if (erro){
                     rej (erro)
                 } else {
-                    res (novoCurso)
+                    res (novocurso)
+                }
+            }
+        )
+    })
+}
+
+function readALLcursoRepository() {
+    return new Promise((resolve, reject) => {
+        db.all(
+            'SELECT * FROM curso', [],
+            (error, rows) => {
+                if (error) {
+                    reject(error);
+                } else{
+                    resolve(rows);
                 }
             }
         )
@@ -30,5 +47,6 @@ function creatCursorepositories (novoCurso){
 }
 
 export default {
-    creatCursorepositories      
+    creatcursoRepository,
+    readALLcursoRepository     
 }
